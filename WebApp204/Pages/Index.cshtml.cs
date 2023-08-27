@@ -7,18 +7,19 @@ namespace WebApp204.Pages
     public class IndexModel : PageModel
     {
         private readonly ILogger<IndexModel> _logger;
-        private readonly ProductService service;
+        private readonly IProductService service;
         public List<Product> Products = new List<Product>();
 
-        public IndexModel(ILogger<IndexModel> logger)
+        public IndexModel(ILogger<IndexModel> logger, IProductService service)
         {
             _logger = logger;
-            service = new ProductService();
+            this.service = service;
+           
         }
 
         public void OnGet()
         {
-            //Products = service.GetProducts();
+            Products = service.GetProducts();
 
         }
     }

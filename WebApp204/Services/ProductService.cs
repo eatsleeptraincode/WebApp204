@@ -3,21 +3,23 @@ using WebApp204.Models;
 
 namespace WebApp204.Services
 {
-    public class ProductService
+    public interface IProductService
     {
-        private static string databaseName = "";
-        private static string databaseUser = "";
-        private static string databasePassword = "";
-        private static string databaseServer = "";
+        List<Product> GetProducts();
+    }
+
+    public class ProductService : IProductService
+    {
+        private readonly IConfiguration config;
+
+        public ProductService(IConfiguration config)
+        {
+            this.config = config;
+        }
 
         private SqlConnection GetConnection()
         {
-            SqlConnectionStringBuilder  builder = new SqlConnectionStringBuilder();
-            builder.DataSource = databaseServer;
-            builder.UserID = databaseUser;
-            builder.Password = databasePassword;
-            builder.InitialCatalog = databaseName;
-            return new SqlConnection( builder.ConnectionString);
+            return new SqlConnection(config.GetConnectionString("SqlConnection"));
         }
 
         public List<Product> GetProducts()

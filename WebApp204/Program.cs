@@ -1,5 +1,8 @@
+using WebApp204.Services;
+
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddScoped<IProductService, ProductService>();
 // Add services to the container.
 builder.Services.AddRazorPages();
 
